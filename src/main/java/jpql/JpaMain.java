@@ -19,20 +19,18 @@ public class JpaMain {
             team.setName("teamA");
             em.persist(team);
 
-            Member member = new Member();
-            member.setUsername("관리자");
-            member.setAge(10);
-            member.setType(MemberType.ADMIN);
+            Member member1 = new Member();
+            member1.setUsername("관리자1");
+            em.persist(member1);
 
-            // 연관관계 만들기
-            member.changeTeam(team);
-
-            em.persist(member);
+            Member member2 = new Member();
+            member2.setUsername("관리자2");
+            em.persist(member2);
 
             em.flush();
             em.clear();
 
-            String query = "select nullif(m.username, '관리자') as username from Member m ";
+            String query = "select group_concat(m.username) from Member m";
             List<String> result = em.createQuery(query, String.class).getResultList();
 
             for (String s : result) {
