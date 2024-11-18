@@ -1,4 +1,4 @@
-package com.hellojpql.jpql;
+package jpql;
 
 import jakarta.persistence.*;
 

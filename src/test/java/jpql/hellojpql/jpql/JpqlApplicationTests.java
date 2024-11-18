@@ -1,4 +1,4 @@
-package com.hellojpql.jpql;
+package jpql.hellojpql.jpql;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
