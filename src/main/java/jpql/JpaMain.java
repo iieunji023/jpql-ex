@@ -22,6 +22,7 @@ public class JpaMain {
             Member member = new Member();
             member.setUsername("teamA");
             member.setAge(10);
+            member.setType(MemberType.ADMIN);
 
             // 연관관계 만들기
             member.changeTeam(team);
@@ -31,11 +32,15 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            String query = "select mm.age, mm.username from (select m.age, m.username from Member m) as mm";
-            List<Member> result = em.createQuery(query, Member.class)
-                    .getResultList();
+            String query = "select m.username, 'HELLO', TRUE From Member m " +
+                            "where m.username is not null";
+            List<Object[]> result = em.createQuery(query).setParameter("userType", MemberType.ADMIN).getResultList();
 
-            System.out.println("result.size() = " + result.size());
+            for (Object[] objects : result) {
+                System.out.println("objects[0] = " + objects[0]);
+                System.out.println("objects[1] = " + objects[1]);
+                System.out.println("objects[2] = " + objects[2]);
+            }
 
             tx.commit();
         } catch (Exception e){
