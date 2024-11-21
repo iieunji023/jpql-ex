@@ -42,10 +42,14 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            String query = "select m From Member m where m.team = :team";
-            Member findMember = em.createQuery(query, Member.class).setParameter("team", teamB).getSingleResult();
+            // 모든 회원의 나이를 20살로 변경
+            // FLUSH 자동 호출
+            int resultCount = em.createQuery("update Member m set m.age = 20").executeUpdate();
 
-            System.out.println("findMember = " + findMember);
+            em.clear();
+
+            Member findMember = em.find(Member.class, member1.getId());
+            System.out.println("findMember.getAge() = " + findMember.getAge());
 
             tx.commit();
         } catch (Exception e){
